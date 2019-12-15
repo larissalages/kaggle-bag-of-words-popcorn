@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from sklearn.feature_extraction.text import CountVectorizer
 import nltk
 #nltk.download()  # Download text data sets, including stop words
 from nltk.corpus import stopwords
@@ -28,3 +29,25 @@ def remove_stop_words(review_text):
     # 6. Join the words back into one string separated by space, 
     # and return the result.
     return( " ".join( meaningful_words ))     
+
+def bag_of_words(clean_train_reviews, max_features = 5000):
+    print "Creating the bag of words...\n"
+
+    # Initialize the "CountVectorizer" object, which is scikit-learn's
+    # bag of words tool.  
+    vectorizer = CountVectorizer(analyzer = "word",   \
+                                tokenizer = None,    \
+                                preprocessor = None, \
+                                stop_words = None,   \
+                                max_features = max_features) 
+
+    # fit_transform() does two functions: First, it fits the model
+    # and learns the vocabulary; second, it transforms our training data
+    # into feature vectors. The input to fit_transform should be a list of 
+    # strings.
+    train_data_features = vectorizer.fit_transform(clean_train_reviews)
+
+    # Numpy arrays are easy to work with, so convert the result to an 
+    # array
+    train_data_features = train_data_features.toarray()
+    return train_data_features

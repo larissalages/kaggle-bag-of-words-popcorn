@@ -2,3 +2,5 @@ data_processing:
   - remove_HTML_Markup
   - remove_non_letters
   - remove_stop_words
+
+transform_2_vector: bag_of_words
